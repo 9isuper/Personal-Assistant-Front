@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Swipe, SwipeItem, Grid, GridItem, Card, NoticeBar } from 'vant'
+import { Swipe, SwipeItem, Grid, GridItem, Card, NoticeBar, Icon } from 'vant'
 
 const banners = ref([
   { id: 1, image: 'https://fastly.jsdelivr.net/npm/@vant/assets/apple-1.jpeg' },
@@ -36,7 +36,7 @@ const products = ref([
   <div class="home">
     <!-- 顶部图片 -->
     <div class="top-image">
-      <img src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" alt="顶部图片" />
+      <img src="https://fsg-cloud-public.oss-cn-hangzhou.aliyuncs.com/fsg/cloud/cms/JsE2z4j3QNuMa9HUvE2vng.jpg  " alt="顶部图片" />
       <!-- 公告栏 -->
       <NoticeBar
         left-icon="volume-o"
@@ -64,6 +64,13 @@ const products = ref([
 
       <!-- 商品列表 -->
       <div class="product-list">
+        <div class="list-header">
+          <h3 class="title">商品列表</h3>
+          <div class="more" @click="$router.push('/category')">
+            更多
+            <van-icon name="arrow" />
+          </div>
+        </div>
         <Card
           v-for="item in products"
           :key="item.id"
@@ -76,11 +83,6 @@ const products = ref([
           <template #tags>
             <div class="card-tags">
               <span class="tag">新品</span>
-            </div>
-          </template>
-          <template #footer>
-            <div class="card-footer">
-              <div class="button">查看详情</div>
             </div>
           </template>
         </Card>
@@ -152,33 +154,81 @@ const products = ref([
 
   .product-list {
     padding: 12px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+
+      .title {
+        font-size: 16px;
+        font-weight: bold;
+        margin: 0;
+      }
+
+      .more {
+        color: #999;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        cursor: pointer;
+
+        &:active {
+          opacity: 0.8;
+        }
+      }
+    }
 
     .product-card {
       background: #fff;
-      height: 100%;
 
-      :deep(.van-card__content) {
+      :deep(.van-card) {
+        background: #fff;
+        padding: 8px;
+      }
+
+      :deep(.van-card__header) {
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 100%;
+        align-items: flex-start;
       }
 
       :deep(.van-card__thumb) {
-        width: 100%;
-        height: 0;
-        padding-bottom: 100%;
-        position: relative;
+        width: 90px;
+        height: 90px;
+        margin-right: 8px;
 
         img {
-          position: absolute;
           width: 100%;
           height: 100%;
           object-fit: cover;
+          border-radius: 4px;
         }
+      }
+
+      :deep(.van-card__content) {
+        padding-right: 0;
+      }
+
+      :deep(.van-card__title) {
+        font-size: 15px;
+        font-weight: bold;
+        margin-bottom: 4px;
+      }
+
+      :deep(.van-card__desc) {
+        font-size: 12px;
+        color: #999;
+        margin-bottom: 4px;
+      }
+
+      :deep(.van-card__price) {
+        color: #ff2c7d;
+        font-weight: bold;
       }
 
       .card-tags {
@@ -188,20 +238,6 @@ const products = ref([
           padding: 2px 6px;
           background: #ffd6e7;
           color: #ff2c7d;
-          border-radius: 4px;
-          font-size: 12px;
-        }
-      }
-
-      .card-footer {
-        margin-top: 8px;
-        text-align: right;
-
-        .button {
-          display: inline-block;
-          padding: 4px 12px;
-          background: #ff2c7d;
-          color: #fff;
           border-radius: 4px;
           font-size: 12px;
         }
